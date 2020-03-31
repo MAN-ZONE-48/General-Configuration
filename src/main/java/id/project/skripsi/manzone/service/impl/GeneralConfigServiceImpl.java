@@ -42,13 +42,10 @@ public class GeneralConfigServiceImpl implements GeneralConfigService {
     private String checkLanguage(GeneralConfigDTO configDTO, String[] settings) {
         String currentLanguage = "";
         for(int index = 0; index < settings.length ; index++){
-            if(configDTO.getLanguageSelect().equals(settings[0])){
+            if(configDTO.getLanguageSelect().equals(settings[0]))
                 currentLanguage = settings[0];
-                return currentLanguage;
-            }
-            else{
+            else
                 currentLanguage = settings[1];
-            }
         }
         return currentLanguage;
     }

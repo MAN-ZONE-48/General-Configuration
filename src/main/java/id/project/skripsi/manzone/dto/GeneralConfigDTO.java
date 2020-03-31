@@ -1,33 +1,22 @@
 package id.project.skripsi.manzone.dto;
 
 public class GeneralConfigDTO {
-    private String userName;
-    private String userConfigValue;
+    private String category;
+    private String languageSelect;
 
-    public static class Builder{
-        private String userName;
-        private String userConfigValue;
-
-        public Builder(String userName){ this.userName = userName;}
-
-        public Builder withUserConfigVale(){
-            this.userConfigValue = userConfigValue;
-            return this;
-        }
-        public GeneralConfigDTO build(){return new GeneralConfigDTO(this);}
-
+    public String getCategory() {
+        return category;
     }
 
-    private GeneralConfigDTO(Builder builder) {
-        this.userName = builder.userName;
-        this.userConfigValue = builder.userConfigValue;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getLanguageSelect() {
+        return languageSelect;
     }
 
-    public String getUserConfigValue() {
-        return userConfigValue;
+    public void setLanguageSelect(String languageSelect) {
+        this.languageSelect = languageSelect;
     }
 }

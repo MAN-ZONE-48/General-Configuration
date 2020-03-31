@@ -1,17 +1,15 @@
 package id.project.skripsi.manzone.controller;
 
 import com.java.common.lib.dto.Response;
+import id.project.skripsi.manzone.dto.GeneralConfigDTO;
 import id.project.skripsi.manzone.service.GeneralConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/v1")
@@ -24,13 +22,12 @@ public class GeneralConfigController {
         this.generalConfigService = generalConfigService;
     }
 
-    @GetMapping("/getGeneralConfig")
-    public ResponseEntity getGeneralConfig(@RequestHeader(name = "Authorization") String token){
+    @PostMapping("/getGeneralConfig")
+    public ResponseEntity getGeneralConfig(@RequestHeader(name = "Authorization") String token, @RequestBody GeneralConfigDTO configDTO, HttpServletResponse response){
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization","Bearer "+token);
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Response currentGeneralConfig = generalConfigService.getUserConfig(auth);
+        Response currentGeneralConfig = generalConfigService.getUserConfig(configDTO, response);
         return new ResponseEntity(currentGeneralConfig, HttpStatus.OK);
     }
 

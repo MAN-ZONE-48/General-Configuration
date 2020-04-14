@@ -57,6 +57,12 @@ public class GeneralConfigServiceImpl implements GeneralConfigService {
         return currentWording;
     }
 
+    @Override
+    public List<GeneralConfigurationWording> getAllWording() {
+        List<GeneralConfigurationWording> wordingList = generalConfigWordingRepository.findAll();
+        return wordingList;
+    }
+
     private GeneralConfigResponse insertGeneralConfig(GeneralConfigDTO configDTO,String[] settings) {
         GeneralConfigResponse configResponse = new GeneralConfigResponse();
         configResponse.setUser_lang_select(checkLanguage(configDTO,settings));

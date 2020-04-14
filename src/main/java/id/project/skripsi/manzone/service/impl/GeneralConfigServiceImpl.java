@@ -5,23 +5,29 @@ import com.java.common.lib.constant.StatusConstant;
 import com.java.common.lib.dto.Response;
 import id.project.skripsi.manzone.constant.AppConstant;
 import id.project.skripsi.manzone.dao.AppSettingRepository;
+import id.project.skripsi.manzone.dao.GeneralConfigWordingRepository;
+import id.project.skripsi.manzone.domain.GeneralConfigurationWording;
 import id.project.skripsi.manzone.dto.GeneralConfigDTO;
+import id.project.skripsi.manzone.dto.GeneralConfigWordingDTO;
 import id.project.skripsi.manzone.dto.response.GeneralConfigResponse;
 import id.project.skripsi.manzone.service.GeneralConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Map;
 
 @Service
 public class GeneralConfigServiceImpl implements GeneralConfigService {
 
     final AppSettingRepository appSettingRepository;
+    final GeneralConfigWordingRepository generalConfigWordingRepository;
 
     @Autowired
-    public GeneralConfigServiceImpl(AppSettingRepository appSettingRepository) {
+    public GeneralConfigServiceImpl(AppSettingRepository appSettingRepository, GeneralConfigWordingRepository generalConfigWordingRepository) {
         this.appSettingRepository = appSettingRepository;
+        this.generalConfigWordingRepository = generalConfigWordingRepository;
     }
 
     @Override
@@ -30,6 +36,25 @@ public class GeneralConfigServiceImpl implements GeneralConfigService {
         String[] settings = currentSetting.get(AppConstant.LANG_SELECT).split(",");
 
         return new Response(false,response.getStatus(), StatusConstant.OK.getMessage(),insertGeneralConfig(configDTO,settings));
+    }
+
+    @Override
+    public Response insertGeneralConfigWording(GeneralConfigWordingDTO configWordingDTO, HttpServletResponse response) {
+        GeneralConfigurationWording currentConfigurationWording = new GeneralConfigurationWording();
+        currentConfigurationWording.setGcoKeyWordingIna(configWordingDTO.getWordingIndonesia());
+        currentConfigurationWording.setGcoKeyWordingEng(configWordingDTO.getWordingEnglish());
+
+        generalConfigWordingRepository.save(currentConfigurationWording);
+        return new Response(false, response.getStatus(),StatusConstant.OK.getMessage(),AppConstant.SUCCESS_INSERT);
+
+    }
+
+    @Override
+    public List<GeneralConfigurationWording> getGeneralWordingByLanguage(String language) {
+        List<GeneralConfigurationWording> currentWording = language.equals(AppConstant.INDONESIA_LANGUAGE) ?
+                generalConfigWordingRepository.getAllIndonesiaWording() :
+                generalConfigWordingRepository.getAllEnglishWording();
+        return currentWording;
     }
 
     private GeneralConfigResponse insertGeneralConfig(GeneralConfigDTO configDTO,String[] settings) {

@@ -12,9 +12,9 @@ import java.util.List;
 @Transactional
 public interface GeneralConfigWordingRepository extends JpaRepository<GeneralConfigurationWording, String> {
 
-    @Query(value = "SELECT gco_key_wording_ina FROM GeneralConfigurationWording",nativeQuery = true)
+    @Query(value = "SELECT a.gcoKeyWordingIna FROM GeneralConfigurationWording a")
     List<GeneralConfigurationWording> getAllIndonesiaWording();
 
-    @Query(value = "SELECT gco_key_wording_eng FORM GeneralConfigurationWording", nativeQuery = true)
+    @Query(value = "SELECT a.gcoKeyWordingEng FROM GeneralConfigurationWording a")
     List<GeneralConfigurationWording>getAllEnglishWording();
 }

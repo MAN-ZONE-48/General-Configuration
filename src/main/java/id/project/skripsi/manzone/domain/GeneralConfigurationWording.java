@@ -13,10 +13,10 @@ import java.util.Objects;
 public class GeneralConfigurationWording {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
-    @SequenceGenerator(name = "seq", initialValue = 1, allocationSize = 10000)
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id")
-    private int id;
+    private String id;
 
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
@@ -34,9 +34,9 @@ public class GeneralConfigurationWording {
     @Column(name = "gco_key_wording_ina")
     private String gcoKeyWordingIna;
 
-    public int getId() { return id; }
+    public String getId() { return id; }
 
-    public void setId(int id) { this.id = id; }
+    public void setId(String id) { this.id = id; }
 
     public Date getCreatedAt() {
         return createdAt;

@@ -64,8 +64,8 @@ public class GeneralConfigServiceImpl implements GeneralConfigService {
     }
 
     @Override
-    public String updateWording(int id, GeneralConfigWordingDTO configWordingDTO) {
-        GeneralConfigurationWording currentWording = generalConfigWordingRepository.findOne(String.valueOf(id));
+    public String updateWording(String id, GeneralConfigWordingDTO configWordingDTO) {
+        GeneralConfigurationWording currentWording = generalConfigWordingRepository.findOne(id);
         currentWording.setGcoKeyWordingEng(configWordingDTO.getWordingEnglish());
         currentWording.setGcoKeyWordingIna(configWordingDTO.getWordingIndonesia());
 

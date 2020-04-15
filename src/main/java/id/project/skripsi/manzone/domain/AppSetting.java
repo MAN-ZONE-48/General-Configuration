@@ -1,4 +1,6 @@
 package id.project.skripsi.manzone.domain;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -7,8 +9,8 @@ import java.util.Objects;
 public class AppSetting {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
-    @SequenceGenerator(name = "seq", initialValue = 1, allocationSize = 10000)
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id")
     private String id;
 

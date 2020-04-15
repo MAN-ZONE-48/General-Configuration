@@ -45,7 +45,7 @@ public class GeneralConfigWordingController {
     }
 
     @PutMapping("/updateWording")
-    public ResponseEntity updateWording(@RequestParam int id, @RequestBody GeneralConfigWordingDTO configWordingDTO, HttpServletResponse response){
+    public ResponseEntity updateWording(@RequestParam String id, @RequestBody GeneralConfigWordingDTO configWordingDTO, HttpServletResponse response){
         String successMessage = generalConfigService.updateWording(id, configWordingDTO);
         return new ResponseEntity(new Response(false,response.getStatus(),StatusConstant.OK.getMessage(),successMessage),HttpStatus.OK);
     }

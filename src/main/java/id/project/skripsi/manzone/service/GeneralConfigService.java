@@ -15,5 +15,6 @@ public interface GeneralConfigService {
     Response getUserConfig(GeneralConfigDTO configDTO, HttpServletResponse response);
     Response insertGeneralConfigWording(GeneralConfigWordingDTO configWordingDTO, HttpServletResponse response);
     List<GeneralConfigurationWording> getGeneralWordingByLanguage(String language);
-
+    List<GeneralConfigurationWording> getAllWording();
+    String updateWording(String id, GeneralConfigWordingDTO configWordingDTO);
 }

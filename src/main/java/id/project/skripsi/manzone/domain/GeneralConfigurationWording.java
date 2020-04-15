@@ -34,13 +34,9 @@ public class GeneralConfigurationWording {
     @Column(name = "gco_key_wording_ina")
     private String gcoKeyWordingIna;
 
-    public String getId() {
-        return id;
-    }
+    public String getId() { return id; }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    public void setId(String id) { this.id = id; }
 
     public Date getCreatedAt() {
         return createdAt;

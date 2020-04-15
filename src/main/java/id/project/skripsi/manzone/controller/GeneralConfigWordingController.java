@@ -4,7 +4,6 @@ import com.java.common.lib.constant.StatusConstant;
 import com.java.common.lib.dto.Response;
 import id.project.skripsi.manzone.constant.AppConstant;
 import id.project.skripsi.manzone.domain.GeneralConfigurationWording;
-import id.project.skripsi.manzone.dto.GeneralConfigDTO;
 import id.project.skripsi.manzone.dto.GeneralConfigWordingDTO;
 import id.project.skripsi.manzone.service.GeneralConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,32 +16,37 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v1")
-public class GeneralConfigController {
+public class GeneralConfigWordingController {
 
     final GeneralConfigService generalConfigService;
 
     @Autowired
-    public GeneralConfigController(GeneralConfigService generalConfigService) {
+    public GeneralConfigWordingController(GeneralConfigService generalConfigService) {
         this.generalConfigService = generalConfigService;
-    }
-
-    @PostMapping("/getGeneralConfig")
-    public ResponseEntity getGeneralConfig(@RequestBody GeneralConfigDTO configDTO, HttpServletResponse response){
-        Response currentGeneralConfig = generalConfigService.getUserConfig(configDTO, response);
-        return new ResponseEntity(currentGeneralConfig, HttpStatus.OK);
     }
 
     @PostMapping("/insertWording")
     public ResponseEntity insertGeneralWording(@RequestBody GeneralConfigWordingDTO configWordingDTO, HttpServletResponse response){
         Response currentGeneralWording = generalConfigService.insertGeneralConfigWording(configWordingDTO,response);
-        return new ResponseEntity(currentGeneralWording,HttpStatus.OK);
+        return new ResponseEntity(currentGeneralWording, HttpStatus.OK);
     }
 
-    @GetMapping("/getAllWording")
+    @GetMapping("/getUserWording")
     public ResponseEntity getWordingBasedOnLanguage(@RequestParam(required = false) String language, HttpServletResponse response){
         if(language.equals(null) ||language.isEmpty()) language = AppConstant.DEFAULT_LANGUAGE;
         List<GeneralConfigurationWording> currentWording = generalConfigService.getGeneralWordingByLanguage(language);
         return new ResponseEntity(new Response(false, response.getStatus(), StatusConstant.OK.getMessage(),currentWording) , HttpStatus.OK);
+    }
 
+    @GetMapping("/getAllWording")
+    public ResponseEntity getAllWording(HttpServletResponse response){
+        List<GeneralConfigurationWording> wordingList = generalConfigService.getAllWording();
+        return new ResponseEntity(new Response(false, response.getStatus(), StatusConstant.OK.getMessage(),wordingList) , HttpStatus.OK);
+    }
+
+    @PutMapping("/updateWording")
+    public ResponseEntity updateWording(@RequestParam String id, @RequestBody GeneralConfigWordingDTO configWordingDTO, HttpServletResponse response){
+        String successMessage = generalConfigService.updateWording(id, configWordingDTO);
+        return new ResponseEntity(new Response(false,response.getStatus(),StatusConstant.OK.getMessage(),successMessage),HttpStatus.OK);
     }
 }

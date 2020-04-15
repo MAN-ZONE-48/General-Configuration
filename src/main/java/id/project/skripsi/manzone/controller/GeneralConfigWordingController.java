@@ -43,9 +43,10 @@ public class GeneralConfigWordingController {
         List<GeneralConfigurationWording> wordingList = generalConfigService.getAllWording();
         return new ResponseEntity(new Response(false, response.getStatus(), StatusConstant.OK.getMessage(),wordingList) , HttpStatus.OK);
     }
-//
-//    @PutMapping("/updateWording")
-//    public ResponseEntity updateWording(){
-//
-//    }
+
+    @PutMapping("/updateWording")
+    public ResponseEntity updateWording(@RequestParam int id, @RequestBody GeneralConfigWordingDTO configWordingDTO, HttpServletResponse response){
+        String successMessage = generalConfigService.updateWording(id, configWordingDTO);
+        return new ResponseEntity(new Response(false,response.getStatus(),StatusConstant.OK.getMessage(),successMessage),HttpStatus.OK);
+    }
 }

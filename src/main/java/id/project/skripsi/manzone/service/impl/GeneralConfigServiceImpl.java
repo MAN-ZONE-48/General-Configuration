@@ -63,6 +63,16 @@ public class GeneralConfigServiceImpl implements GeneralConfigService {
         return wordingList;
     }
 
+    @Override
+    public String updateWording(int id, GeneralConfigWordingDTO configWordingDTO) {
+        GeneralConfigurationWording currentWording = generalConfigWordingRepository.findOne(String.valueOf(id));
+        currentWording.setGcoKeyWordingEng(configWordingDTO.getWordingEnglish());
+        currentWording.setGcoKeyWordingIna(configWordingDTO.getWordingIndonesia());
+
+        generalConfigWordingRepository.save(currentWording);
+        return AppConstant.SUCCESS_UPDATE;
+    }
+
     private GeneralConfigResponse insertGeneralConfig(GeneralConfigDTO configDTO,String[] settings) {
         GeneralConfigResponse configResponse = new GeneralConfigResponse();
         configResponse.setUser_lang_select(checkLanguage(configDTO,settings));
